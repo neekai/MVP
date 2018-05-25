@@ -1,11 +1,10 @@
-const request = require('request');
+const rp = require('request-promise');
 const express = require('express');
 
 const punchLineController = {
     FETCH: (req, res) => {
-        console.log('this is the reqbody..', req.body);
-        let name = req.body.name;
-        request('https://insult.mattbas.org/api/insult.txt?who=' + name, function(error, response, body) {
+        let name = req.query.who;
+        rp('https://insult.mattbas.org/api/insult.txt?who=' + name, function(error, response, body) {
             console.log('error: ', error);
             console.log('statusCode: ', response && response.statusCode);
             console.log('body: ', body);

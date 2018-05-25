@@ -14,7 +14,12 @@ class App extends React.Component {
 
     handleInputAndSubmit(e) {
         e.preventDefault();
-        axios.get('/api/punch')
+        let name = document.getElementById('name').value;
+        axios.get('/api/punch', {
+            params: {
+                who: name
+            }
+        })
           .then(response => {
             this.setState({
             insult: response.data
@@ -24,7 +29,15 @@ class App extends React.Component {
         e.target.reset();
   }
 
- 
+    saveInsultToDB() {
+        let insultText = document.getElementById('insult').textContent;
+        axios.post('/api/insults', {
+            insult: insultText
+        })
+        .then(response => {
+            console.log(response)
+        })
+    }
 
 
 
@@ -37,13 +50,17 @@ class App extends React.Component {
         return (
             <div>
                 <h1>I HATE YOU.</h1>
-                <form onClick= {e => this.handleInputAndSubmit(e)} >
-                    I HATE YOU: <input type="text"/>
+                <form onSubmit= {e => this.handleInputAndSubmit(e)} >
+                    I HATE YOU: <input type="text" id='name'/>
                     <button> Screw You! </button>
                 </form>
+                <br/>
+                <h3 id='insult'>{this.state.insult}</h3>
+                <button>I LOVE IT!</button>
             </div>
         )
     }
 }
 
 export default App;
+
