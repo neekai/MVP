@@ -6,13 +6,11 @@ const { db } = require('../config');
 
 // })
 
-const Song = db.define('song', {
-    songName: { type: Sequelize.STRING, unique: true},
-    artist: Sequelize.STRING,
-    plays: Sequelize.INTEGER,
+const Insult = db.define('insult', {
+    punchLine: { type: Sequelize.STRING, unique: true}
 
 });
 
 module.exports = {
-    Song,
+    Insult,
 }
