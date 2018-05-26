@@ -1,4 +1,5 @@
 const { Insult } = require('../../database/models');
+const Sequelize = require('sequelize');
 
 const insultController = {
   FETCH: (req, res) => {
@@ -11,7 +12,7 @@ const insultController = {
 
   SAVE: (req, res) => {
       const insult = Insult.create({
-          punchLine: '',
+          punchLine: req.body.insult,
       })
       .then(data => {res.status(201).send("added insult to list"); console.log("successfully added insult to db from insultController")})
       .catch(err => {throw err; console.log('There was an error saving to db from insultController')})

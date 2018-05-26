@@ -1,9 +1,9 @@
 import React from 'react';
 
-let Insult = ({ insult }) => (
+let Insult = ({ insult, saveInsultToDB }) => (
     <div>
-      <h3>{insult}</h3>
-      <button>I LOVE IT!</button>
+      <h3 id='insult'>{insult}</h3>
+      <button onClick={ () => saveInsultToDB() }>I LOVE IT!</button>
     </div>
 );
 

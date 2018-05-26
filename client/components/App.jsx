@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import Insult from './Insult.jsx';
-import MyInsults from './MyInsults.jsx'
+import MyInsults from './MyInsults.jsx';
+
 
 
 class App extends React.Component {
@@ -14,6 +15,11 @@ class App extends React.Component {
         }
         this.handleInputAndSubmit = this.handleInputAndSubmit.bind(this);
         this.saveInsultToDB = this.saveInsultToDB.bind(this);
+        this.fetchInsultsFromDB = this.fetchInsultsFromDB.bind(this);
+    }
+
+    componentDidMount() {
+        this.fetchInsultsFromDB();
     }
 
     handleInputAndSubmit(e) {
@@ -33,18 +39,26 @@ class App extends React.Component {
         e.target.reset();
   }
 
+    fetchInsultsFromDB() {
+        axios.get('/api/insults')
+          .then(response => {
+            const InsultsArr = [];
+            console.log('This is the response data..', response.data)
+            response.data.forEach(insult => InsultsArr.push(insult.punchLine));
+            this.setState({
+                myInsults: [...InsultsArr]
+            });
+          })
+          .catch(err => {throw err; console.log('There was an error fetching from db..', err)});
+    }
+
     saveInsultToDB() {
         let insultText = document.getElementById('insult').textContent;
         axios.post('/api/insults', {
             insult: insultText
         })
         .then(response => {
-            const InsultsArr = [];
-            console.log('This is the response data..', response.data)
-            response.data.forEach(insult => InsultsArr.push(insult));
-            this.setState({
-                myInsults: [...InsultsArr]
-            })
+            this.fetchInsultsFromDB();
         })
         .catch(err => {
             throw err;

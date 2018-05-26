@@ -11,6 +11,8 @@ const Insult = db.define('insult', {
 
 });
 
+db.sync({ force: true });
+
 module.exports = {
     Insult,
 }
