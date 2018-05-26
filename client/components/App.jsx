@@ -90,11 +90,16 @@ class App extends React.Component {
 
     render() {
         return (
-            <div>
+            <div id="main">
                 <h1>I HATE YOU.</h1>
                 <form onSubmit= {e => this.handleInputAndSubmit(e)} >
-                    I HATE YOU: <input type="text" id='name'/>
-                    <button> Screw You! </button>
+                    <div class="ui right labeled input">
+                      <input type="text" id = 'name' placeholder="AHHHHHHHHHH!"/>
+                        <div class="ui basic label">
+                          >:(
+                        </div>
+                    </div>
+                    <button id ="screw" class="ui negative basic button"> Screw You! </button>
                 </form>
                 <br/>
                 {this.state.insult && <Insult insult={this.state.insult} saveInsultToDB={this.saveInsultToDB}/>}
