@@ -4,7 +4,8 @@ const { punchLineController } = require('../controllers/punchLineController.js')
 
 router.route('/insults')
       .get(insultController.FETCH)
-      .post(insultController.SAVE);
+      .post(insultController.SAVE)
+      .delete(insultController.DESTROY);
 
 router.route('/punch')
       .get(punchLineController.FETCH);

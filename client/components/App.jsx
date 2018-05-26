@@ -66,6 +66,26 @@ class App extends React.Component {
         })
     }
 
+    deleteInsultFromDB(index){
+        let deleteInsult = this.state.myInsults[index];
+        let insultsAfterDelete = this.state.myInsults;
+        insultsAfterDelete.splice(index, 1);
+        axios.delete('/api/insults', {
+            params: {
+                insultToDelete: deleteInsult
+            }
+        })
+        .then((data) => {
+            this.setState({
+                myInsults: insultsAfterDelete
+            })
+        })
+        .catch((err) => {
+            throw err;
+            console.log('There was an error deleting..', err)
+        })
+    }
+
     render() {
         return (
             <div>
@@ -77,7 +97,7 @@ class App extends React.Component {
                 <br/>
                 {this.state.insult && <Insult insult={this.state.insult} saveInsultToDB={this.saveInsultToDB}/>}
                 <br/>
-                {this.state.myInsults.map((myInsult, index) => <MyInsults myInsult={myInsult} index={index} />)}
+                {this.state.myInsults.map((myInsult, index) => <MyInsults myInsult={myInsult} index={index} key={index} />)}
             </div>
         )
     }
