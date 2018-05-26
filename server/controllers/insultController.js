@@ -19,7 +19,7 @@ const insultController = {
   },
 
   DESTROY: (req, res) => {
-      console.log('This is the insult to be deleted..', req.query.insultToDelete)
+      console.log('This is the insult to be deleted..', req.query)
       Insult.destroy({
           where: {
               punchLine: req.query.insultToDelete

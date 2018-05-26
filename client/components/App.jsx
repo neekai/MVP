@@ -16,6 +16,7 @@ class App extends React.Component {
         this.handleInputAndSubmit = this.handleInputAndSubmit.bind(this);
         this.saveInsultToDB = this.saveInsultToDB.bind(this);
         this.fetchInsultsFromDB = this.fetchInsultsFromDB.bind(this);
+        this.deleteInsultFromDB = this.deleteInsultFromDB.bind(this);
     }
 
     componentDidMount() {
@@ -43,7 +44,6 @@ class App extends React.Component {
         axios.get('/api/insults')
           .then(response => {
             const InsultsArr = [];
-            console.log('This is the response data..', response.data)
             response.data.forEach(insult => InsultsArr.push(insult.punchLine));
             this.setState({
                 myInsults: [...InsultsArr]
@@ -68,6 +68,8 @@ class App extends React.Component {
 
     deleteInsultFromDB(index){
         let deleteInsult = this.state.myInsults[index];
+        // console.log('this.state.myinsult..', this.state.myInsults)
+        // console.log('this is index..')
         let insultsAfterDelete = this.state.myInsults;
         insultsAfterDelete.splice(index, 1);
         axios.delete('/api/insults', {
@@ -97,7 +99,7 @@ class App extends React.Component {
                 <br/>
                 {this.state.insult && <Insult insult={this.state.insult} saveInsultToDB={this.saveInsultToDB}/>}
                 <br/>
-                {this.state.myInsults.map((myInsult, index) => <MyInsults myInsult={myInsult} index={index} key={index} />)}
+                {this.state.myInsults.map((myInsult, index) => <MyInsults myInsult={myInsult} index={index} key={index} deleteFromDB={this.deleteInsultFromDB}/>)}
             </div>
         )
     }
