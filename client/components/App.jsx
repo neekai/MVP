@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import Insult from './Insult.jsx';
+import MyInsults from './MyInsults.jsx'
 
 
 class App extends React.Component {
@@ -7,9 +9,11 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            insult: ''
+            insult: '',
+            myInsults: []
         }
         this.handleInputAndSubmit = this.handleInputAndSubmit.bind(this);
+        this.saveInsultToDB = this.saveInsultToDB.bind(this);
     }
 
     handleInputAndSubmit(e) {
@@ -35,16 +39,18 @@ class App extends React.Component {
             insult: insultText
         })
         .then(response => {
-            console.log(response)
+            const InsultsArr = [];
+            console.log('This is the response data..', response.data)
+            response.data.forEach(insult => InsultsArr.push(insult));
+            this.setState({
+                myInsults: [...InsultsArr]
+            })
+        })
+        .catch(err => {
+            throw err;
+            console.log('There was an err saving to db', err);
         })
     }
-
-
-
-
-
-
-
 
     render() {
         return (
@@ -55,12 +61,12 @@ class App extends React.Component {
                     <button> Screw You! </button>
                 </form>
                 <br/>
-                <h3 id='insult'>{this.state.insult}</h3>
-                <button>I LOVE IT!</button>
+                {this.state.insult && <Insult insult={this.state.insult} saveInsultToDB={this.saveInsultToDB}/>}
+                <br/>
+                {this.state.myInsults.map((myInsult, index) => <MyInsults myInsult={myInsult} index={index} />)}
             </div>
         )
     }
 }
 
 export default App;
-
