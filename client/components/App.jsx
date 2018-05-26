@@ -92,18 +92,19 @@ class App extends React.Component {
         return (
             <div id="main">
                 <h1>I HATE YOU.</h1>
-                <form onSubmit= {e => this.handleInputAndSubmit(e)} >
+                <form id='form' onSubmit= {e => this.handleInputAndSubmit(e)} >
                     <div class="ui right labeled input">
-                      <input type="text" id = 'name' placeholder="AHHHHHHHHHH!"/>
+                      <input type="text" id = 'name' placeholder="AHHHHHHHHHH!" required/>
                         <div class="ui basic label">
                           >:(
                         </div>
                     </div>
-                    <button id ="screw" class="ui negative basic button"> Screw You! </button>
+                    <button id ="screw" class="ui negative inverted huge red button"> Screw You! </button>
                 </form>
                 <br/>
                 {this.state.insult && <Insult insult={this.state.insult} saveInsultToDB={this.saveInsultToDB}/>}
                 <br/>
+                {this.state.myInsults.length === 0 ? null : <h2>My Insults</h2> } 
                 {this.state.myInsults.map((myInsult, index) => <MyInsults myInsult={myInsult} index={index} key={index} deleteFromDB={this.deleteInsultFromDB}/>)}
             </div>
         )

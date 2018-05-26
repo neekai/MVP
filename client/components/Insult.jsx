@@ -4,7 +4,7 @@ let Insult = ({ insult, saveInsultToDB }) => (
     <div>
       <h3 id='insult'>{insult}</h3>
       
-      <button class="ui inverted violet button" onClick={ () => saveInsultToDB() }>I LOVE IT!</button>
+      <button class="ui inverted green icon button" onClick={ () => saveInsultToDB() }><i class="heart icon"></i>I LOVE IT!</button>
     </div>
 );
 
